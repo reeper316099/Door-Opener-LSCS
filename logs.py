@@ -3,13 +3,17 @@ import sys
 import tty
 import termios
 
+# Menu options shown in terminal UI.
 options = ["Unfiltered", "Date", "IP address"]
 
 
 def clear():
+    """Clear terminal output for menu redraw."""
     os.system("clear")
 
+
 def getch():
+    """Read one keypress, including ANSI arrow sequences."""
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
     try:
@@ -21,14 +25,18 @@ def getch():
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
+
 def process_selection(choice):
+    """Execute action associated with selected menu entry."""
     if choice == 0:
         print("")
         with open("./logs.txt", "r") as logs:
             print(logs.read())
         print("")
     elif choice == 1:
+        # Date-based filtering is scaffolded but not yet implemented.
         date = input("Date: ")
+        _ = date
 
     elif choice == 2:
         ip_address = input("address: ")
@@ -40,7 +48,9 @@ def process_selection(choice):
             print("\n".join(filtered_lines))
         print("")
 
+
 def main():
+    """Simple interactive log reader."""
     selection = 0
 
     while True:
